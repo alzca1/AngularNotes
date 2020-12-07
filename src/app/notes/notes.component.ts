@@ -19,6 +19,7 @@ export class NotesComponent implements OnInit {
   ngOnInit(): void {
     this.notes = this.route.snapshot.data.notes;
     this.notemaker.$notesChanged.subscribe((data) => {
+      console.log('updating');
       this.notes = data;
     });
   }
