@@ -20,6 +20,7 @@ export class NotesComponent implements OnInit {
     this.notes = this.route.snapshot.data.notes;
     this.notemaker.$notesChanged.subscribe((data) => {
       console.log('updating');
+      console.log(data);
       this.notes = data;
     });
   }

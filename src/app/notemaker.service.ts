@@ -58,6 +58,10 @@ export class NotemakerService {
       })
       .subscribe((data) => {
         console.log(data);
+        this.fetchPosts().subscribe((response) => {
+          this.notes = response;
+          this.$notesChanged.next(this.notes);
+        });
       });
   }
 
