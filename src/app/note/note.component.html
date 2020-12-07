@@ -1,0 +1,16 @@
+<article id="note" cdkDrag>
+  <div class="note-buttons-container">
+    <button mat-mini-fab color="accent" (click)="removeNote(note.id)">
+      <span class="material-icons"> delete </span>
+      <!-- <mat-icon><i class="material-icons">delete</i></mat-icon> -->
+    </button>
+  </div>
+  <div class="note-text-container">
+    <h3 contenteditable="true" (mousedown)="$event.stopPropagation()" #title>
+      {{ note.title }}
+    </h3>
+    <p contenteditable="true" (mousedown)="$event.stopPropagation()" #content>
+      {{ note.content }}
+    </p>
+  </div>
+</article>

@@ -1,0 +1,30 @@
+#notes {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#notes .notes-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  width: 100%;
+}
+
+#notes .mat-fab {
+  animation: addButton 2s linear infinite alternate;
+}
+
+@keyframes addButton {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}

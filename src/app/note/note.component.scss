@@ -1,0 +1,42 @@
+#note {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  min-height: 200px;
+  background-color: yellow;
+  word-wrap: break-word;
+  margin: 15px;
+  box-shadow: 0px 5px 15px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+#note .note-buttons-container {
+  background-color: rgb(194, 194, 11);
+  width: 100%;
+  position: relative;
+  height: 25px;
+}
+#note h3,
+p {
+  outline: none;
+}
+
+#note h3 {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+#note .mat-mini-fab {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  transform: scale(0.45);
+}
+
+#note .note-text-container {
+  padding: 0 10px 7px 10px;
+}
+
+#note .note-text-container h3 {
+  text-align: center;
+}

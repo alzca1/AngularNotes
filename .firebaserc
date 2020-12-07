@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "notesapp-227eb": {
+      "hosting": {
+        "notesAppContentEditable": [
+          "notesapp-227eb"
+        ]
+      }
+    }
+  }
+}

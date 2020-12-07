@@ -1,0 +1,11 @@
+<div id="notes">
+  <div class="button-container">
+    <button mat-fab color="warn" (click)="addNote()">
+      <span class="material-icons"> note_add </span>
+    </button>
+  </div>
+
+  <div class="notes-container">
+    <app-note *ngFor="let note of notes" [note]="note"></app-note>
+  </div>
+</div>
