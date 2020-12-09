@@ -1,6 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DEFAULT_OPTIONS,
+} from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { NoteComponent } from './note/note.component';
@@ -14,6 +20,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { Resolver } from './resolver';
 import { Routes } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { LogFormComponent } from './log-form/log-form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 
 const routes: Routes = [
   {
@@ -29,7 +40,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, NoteComponent, NotesComponent],
+  declarations: [
+    AppComponent,
+    NoteComponent,
+    NotesComponent,
+    NavbarComponent,
+    LogFormComponent,
+  ],
+  entryComponents: [LogFormComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -39,8 +57,17 @@ const routes: Routes = [
     AngularFirestoreModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatDialogModule,
   ],
-  providers: [Resolver],
+  providers: [
+    Resolver,
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
+    { provide: MatDialogRef, useValue: {} },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

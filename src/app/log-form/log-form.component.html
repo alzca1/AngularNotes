@@ -1,0 +1,29 @@
+<section id="signInForm">
+  <h3 mat-dialog-title>{{ isLoginMode ? "Sign in" : "Sign up" }}</h3>
+  <div mat-dialog-content>
+    <form [formGroup]="signInForm">
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="text"
+          placeholder="Type your e-mail"
+          formControlName="email"
+        />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="password"
+          placeholder="Type your password"
+          formControlName="password"
+        />
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close] (click)="onSubmit()">Submit</button>
+    <small (click)="onSwitchLogMode()">{{
+      isLoginMode ? "Wanna sign up?" : "Wanna log in?"
+    }}</small>
+  </div>
+</section>

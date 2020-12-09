@@ -1,0 +1,32 @@
+#signInForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  padding: 20px 20px 25px 20px;
+  // border: 1px solid rgba(114, 108, 108, 0.3);
+  // box-shadow: 1px 1px 11px -1px grey;
+}
+
+#signInForm .form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+
+#signInForm .mat-dialog-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+#signInForm small {
+  color: blue;
+  cursor: pointer;
+}
+// #signInForm .form-group input {
+//   width: 100%;
+//   padding: 0 5px;
+// }

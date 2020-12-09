@@ -1,0 +1,29 @@
+#navbar {
+  background-color: #0d1f2d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#navbar a {
+  text-decoration: none;
+  color: inherit;
+}
+#navbar .title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#navbar .title-container a {
+  padding: 20px;
+  font-size: 2rem;
+}
+
+#navbar .log-container {
+  display: flex;
+  font-size: 1rem;
+  padding: 0 15px;
+}
