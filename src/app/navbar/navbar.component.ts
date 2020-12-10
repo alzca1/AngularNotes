@@ -6,6 +6,9 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { LogFormComponent } from '../log-form/log-form.component';
+import { AuthService } from '../auth.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -14,14 +17,29 @@ import { LogFormComponent } from '../log-form/log-form.component';
 })
 export class NavbarComponent implements OnInit {
   @ViewChild(MatMenuTrigger) signIn: MatMenuTrigger;
-  constructor(public dialog: MatDialog) {}
+  isLoggedIn = false;
+  private userSub: Subscription;
+  constructor(
+    public dialog: MatDialog,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userSub = this.auth.user.subscribe((user) => {
+      this.isLoggedIn = !user ? false : true;
+    });
+  }
 
   openDialog() {
     const dialogRef = this.dialog.open(LogFormComponent, {
       width: '300px',
       height: '300px',
     });
+  }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/home']);
   }
 }

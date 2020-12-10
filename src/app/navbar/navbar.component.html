@@ -5,8 +5,8 @@
   <div>
     <ul class="log-container">
       <li><a (click)="openDialog()">Log In</a></li>
-      <li>
-        <a href="#">Log out</a>
+      <li *ngIf="isLoggedIn">
+        <a (click)="logout()">Log out</a>
       </li>
     </ul>
   </div>

@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Note } from './note.class';
 
-import { map, mergeMap } from 'rxjs/operators';
+import { exhaustMap, map, mergeMap, take } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class NotemakerService {
   private notesUrl =
     'https://notesapp-b2c5d-default-rtdb.firebaseio.com/notes.json';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   addNote() {
     const newNote = new Note('Type a title', 'Type content');
@@ -36,7 +37,7 @@ export class NotemakerService {
       map((response) => {
         const notes = [];
         for (let key in response) {
-          if (response.hasOwnProperty(key)) {
+          if (response.hasOwnProperty) {
             notes.push({ ...response[key], id: key });
           }
         }
@@ -44,6 +45,27 @@ export class NotemakerService {
         return this.notes;
       })
     );
+    // return this.auth.user.pipe(
+    //   take(1),
+    //   exhaustMap((user) => {
+    //     return this.http
+    //       .get(this.notesUrl, {
+    //         params: new HttpParams().set('auth', user.token),
+    //       })
+    //       .pipe(
+    //         map((response) => {
+    //           const notes = [];
+    //           for (let key in response) {
+    //             if (response.hasOwnProperty(key)) {
+    //               notes.push({ ...response[key], id: key });
+    //             }
+    //           }
+    //           this.notes = notes;
+    //           return this.notes;
+    //         })
+    //       );
+    //   })
+    // );
   }
 
   updateNote(id, title, content) {

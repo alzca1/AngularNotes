@@ -1,14 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AuthResponseData } from '../auth.service';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+
 import {
   MatFormField,
   MatFormFieldControl,
 } from '@angular/material/form-field';
+
+import { AuthService } from '../auth.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-log-form',
@@ -17,7 +23,12 @@ import {
 })
 export class LogFormComponent implements OnInit {
   isLoginMode = true;
-  constructor(public dialogRef: MatDialogRef<LogFormComponent>) {}
+  isLoading = false;
+  constructor(
+    public dialogRef: MatDialogRef<LogFormComponent>,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   signInForm: FormGroup;
   ngOnInit(): void {
@@ -28,8 +39,29 @@ export class LogFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.signInForm.value);
+    this.isLoading = true;
+    const { email, password } = this.signInForm.value;
+    let authObs: Observable<AuthResponseData>;
+    if (!this.isLoginMode) {
+      authObs = this.auth.signUp(email, password);
+    } else {
+      authObs = this.auth.signIn(email, password);
+    }
+
+    authObs.subscribe(
+      (data) => {
+        console.log(data);
+        this.isLoading = false;
+        console.log('redirecting');
+        this.router.navigate(['/notes']);
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
   }
+
   onSwitchLogMode() {
     this.isLoginMode = !this.isLoginMode;
     console.log('switching');
