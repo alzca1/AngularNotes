@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Note } from './note.class';
 
@@ -9,18 +9,24 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class NotemakerService {
+export class NotemakerService implements OnInit {
   $notesChanged = new Subject<any>();
   private notes: Note[] = [];
-  private baseUrl = 'https://notesapp-b2c5d-default-rtdb.firebaseio.com/';
-  private notesUrl =
-    'https://notesapp-b2c5d-default-rtdb.firebaseio.com/notes.json';
+  private uid: string;
+  private baseUrl = 'https://notesapp-b2c5d-default-rtdb.firebaseio.com/users/';
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 
+  ngOnInit() {}
+
+  onFetchPosts() {
+    this.fetchPosts();
+  }
+
   addNote() {
     const newNote = new Note('Type a title', 'Type content');
-    this.http.post(this.notesUrl, newNote).subscribe((message) => {
+    const notesUrl = this.baseUrl + this.uid + '/notes.json';
+    this.http.post(notesUrl, newNote).subscribe((message) => {
       this.fetchPosts().subscribe((data) => {
         this.notes = data;
         this.$notesChanged.next(this.notes);
@@ -28,12 +34,9 @@ export class NotemakerService {
     });
   }
 
-  onFetchPosts() {
-    this.fetchPosts();
-  }
-
   fetchPosts() {
-    return this.http.get(this.notesUrl).pipe(
+    this.updateUserId();
+    return this.http.get(this.baseUrl + this.uid + '/notes.json').pipe(
       map((response) => {
         const notes = [];
         for (let key in response) {
@@ -45,31 +48,10 @@ export class NotemakerService {
         return this.notes;
       })
     );
-    // return this.auth.user.pipe(
-    //   take(1),
-    //   exhaustMap((user) => {
-    //     return this.http
-    //       .get(this.notesUrl, {
-    //         params: new HttpParams().set('auth', user.token),
-    //       })
-    //       .pipe(
-    //         map((response) => {
-    //           const notes = [];
-    //           for (let key in response) {
-    //             if (response.hasOwnProperty(key)) {
-    //               notes.push({ ...response[key], id: key });
-    //             }
-    //           }
-    //           this.notes = notes;
-    //           return this.notes;
-    //         })
-    //       );
-    //   })
-    // );
   }
 
   updateNote(id, title, content) {
-    const noteUrl = this.baseUrl + 'notes/' + id + '.json';
+    const noteUrl = this.baseUrl + this.uid + '/notes/' + id + '.json';
     const newTitle = title.nativeElement.innerText;
     const newContent = content.nativeElement.innerText;
     // const updatedNotes = this.notes.slice();
@@ -88,12 +70,21 @@ export class NotemakerService {
   }
 
   removeNote(id) {
-    const noteUrl = this.baseUrl + 'notes/' + id + '.json';
+    const noteUrl = this.baseUrl + this.uid + '/notes/' + id + '.json';
     return this.http.delete(noteUrl).subscribe((data) => {
       this.fetchPosts().subscribe((response) => {
         this.notes = response;
         this.$notesChanged.next(this.notes);
       });
+    });
+  }
+
+  updateUserId() {
+    this.auth.user.subscribe((user) => {
+      if (user) {
+        console.log('updating user');
+        this.uid = user.id;
+      }
     });
   }
 }

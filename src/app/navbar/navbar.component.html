@@ -4,7 +4,8 @@
   </div>
   <div>
     <ul class="log-container">
-      <li><a (click)="openDialog()">Log In</a></li>
+      <li *ngIf="userName">{{ userName }}</li>
+      <li *ngIf="!isLoggedIn"><a (click)="openDialog()">Log In</a></li>
       <li *ngIf="isLoggedIn">
         <a (click)="logout()">Log out</a>
       </li>

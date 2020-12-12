@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   @ViewChild(MatMenuTrigger) signIn: MatMenuTrigger;
   isLoggedIn = false;
+  userName: string = '';
   private userSub: Subscription;
   constructor(
     public dialog: MatDialog,
@@ -28,6 +29,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe((user) => {
       this.isLoggedIn = !user ? false : true;
+      if (user) {
+        this.userName = user.email.split('@')[0];
+      }
     });
   }
 

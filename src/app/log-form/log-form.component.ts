@@ -15,6 +15,7 @@ import {
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { NotemakerService } from '../notemaker.service';
 
 @Component({
   selector: 'app-log-form',
@@ -27,7 +28,8 @@ export class LogFormComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<LogFormComponent>,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private noteMaker: NotemakerService
   ) {}
 
   signInForm: FormGroup;
@@ -50,7 +52,6 @@ export class LogFormComponent implements OnInit {
 
     authObs.subscribe(
       (data) => {
-        console.log(data);
         this.isLoading = false;
         console.log('redirecting');
         this.router.navigate(['/notes']);
