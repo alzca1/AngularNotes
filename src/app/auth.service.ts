@@ -30,6 +30,7 @@ export class AuthService {
     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
   apiKey = 'AIzaSyD1O6sO7uFrwlns1gR1PGfAibtNu_uyHoA';
   user = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient) {}
 
@@ -91,14 +92,27 @@ export class AuthService {
       new Date(userData._tokenExpirationDate)
     );
     if (loadedUser.token) {
+      // expirationDuration es igual a la fecha de caducidad del token - el tiempo actual. El resultado
+      // es el tiempo restante que queda hasta que caduque el token.
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autologout(expirationDuration);
       this.user.next(loadedUser);
     }
+  }
+
+  autologout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   private handleAuthentication(email, userId, token, expiresIn) {
     const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
+    this.autologout(expiresIn);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 }
