@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   @ViewChild(MatMenuTrigger) signIn: MatMenuTrigger;
   isLoggedIn = false;
-  userName: string = '';
+  userName: string = null;
   private userSub: Subscription;
   constructor(
     public dialog: MatDialog,

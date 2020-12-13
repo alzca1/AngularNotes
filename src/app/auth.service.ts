@@ -13,6 +13,13 @@ export interface AuthResponseData {
   refreshToken: string;
   registered?: boolean;
 }
+
+interface UserData {
+  email: string;
+  id: string;
+  _token: string;
+  _tokenExpirationDate: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -72,9 +79,26 @@ export class AuthService {
     localStorage.removeItem('userData');
   }
 
+  autologin() {
+    const userData: UserData = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+      return;
+    }
+    const loadedUser = new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+    }
+  }
+
   private handleAuthentication(email, userId, token, expiresIn) {
     const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 }
