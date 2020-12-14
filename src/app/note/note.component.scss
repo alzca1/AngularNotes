@@ -3,7 +3,6 @@
   flex-direction: column;
   width: 200px;
   min-height: 200px;
-  background-color: yellow;
   word-wrap: break-word;
   margin: 15px;
   box-shadow: 0px 5px 15px 5px rgba(0, 0, 0, 0.3);
@@ -11,7 +10,6 @@
 }
 
 #note .note-buttons-container {
-  background-color: rgb(194, 194, 11);
   width: 100%;
   position: relative;
   height: 25px;
@@ -39,4 +37,68 @@ p {
 
 #note .note-text-container h3 {
   text-align: center;
+}
+
+#note .note-buttons-container .note-color-button {
+  content: "";
+  width: 5px;
+  height: 5px;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0.5px solid rgba(0, 0, 0, 0.131);
+  margin: 0 1px;
+}
+
+#note .note-buttons-container .note-colors-container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding-left: 5px;
+}
+.yellowContainer {
+  background-color: #fef3a1;
+}
+
+#note .yellowButtonContainer {
+  background-color: #fde84f;
+}
+
+.blueContainer {
+  background-color: #aff4fe;
+}
+
+#note .blueButtonContainer {
+  background-color: #8df0fe;
+}
+
+.greenContainer {
+  background-color: #b4fda5;
+}
+
+#note .greenButtonContainer {
+  background-color: #87fc89;
+}
+.pinkContainer {
+  background-color: #fec7c8;
+}
+
+#note .pinkButtonContainer {
+  background-color: #fdb2b3;
+}
+
+.violetContainer {
+  background-color: #b7cbfd;
+}
+
+#note .violetButtonContainer {
+  background-color: #9cb7fc;
+}
+
+.greyContainer {
+  background-color: #eeeeee;
+}
+
+#note .greyButtonContainer {
+  background-color: #dadada;
 }

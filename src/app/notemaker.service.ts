@@ -87,4 +87,15 @@ export class NotemakerService implements OnInit {
       }
     });
   }
+
+  updateColor(id, color) {
+    const noteUrl = this.baseUrl + this.uid + '/notes/' + id + '.json';
+    this.http
+      .patch(noteUrl, {
+        color: color,
+      })
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
 }

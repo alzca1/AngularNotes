@@ -1,5 +1,13 @@
-<article id="note" cdkDrag>
-  <div class="note-buttons-container">
+<article id="note" cdkDrag [ngClass]="noteColor">
+  <div [ngClass]="['note-buttons-container', buttonContainerColor]">
+    <div class="note-colors-container">
+      <span
+        *ngFor="let color of noteColors"
+        [ngStyle]="{ 'background-color': color.backgroundColor }"
+        (click)="updateColor(color.color)"
+        class="note-color-button"
+      ></span>
+    </div>
     <button mat-mini-fab color="accent" (click)="removeNote(note.id)">
       <span class="material-icons"> delete </span>
       <!-- <mat-icon><i class="material-icons">delete</i></mat-icon> -->
