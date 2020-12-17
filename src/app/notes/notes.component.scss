@@ -1,12 +1,12 @@
 #notes {
   height: 100vh;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  display: flex;
   flex-direction: column;
-  position: relative;
+}
+
+#notes .button-container {
+  text-align: center;
+  padding-top: 10px;
 }
 
 #notes .notes-container {
