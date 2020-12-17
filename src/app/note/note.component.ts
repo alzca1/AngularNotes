@@ -7,6 +7,14 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { NotemakerService } from '../notemaker.service';
@@ -15,6 +23,30 @@ import { NotemakerService } from '../notemaker.service';
   selector: 'app-note',
   templateUrl: './note.component.html',
   styleUrls: ['./note.component.scss'],
+  animations: [
+    trigger('divState', [
+      state(
+        'open',
+        style({
+          width: '50px',
+          opacity: 1,
+          backgroundColor: 'transparent',
+          transform: 'translate(20px,0)',
+        })
+      ),
+      state(
+        'closed',
+        style({
+          width: '0px',
+          opacity: 0,
+          left: '-100px',
+          transform: 'translate(-20px,-100px)',
+        })
+      ),
+      transition('closed => open', animate(300)),
+      transition('open => closed', animate(300)),
+    ]),
+  ],
 })
 export class NoteComponent implements OnInit {
   @Input() note;
@@ -23,6 +55,7 @@ export class NoteComponent implements OnInit {
   @ViewChild('note', { static: true }) noteContainer: ElementRef;
   buttonContainerColor: string;
   noteColor: string;
+  state: string = 'closed';
 
   noteColors = [
     {
@@ -164,5 +197,10 @@ export class NoteComponent implements OnInit {
     const localTime = newDate.toLocaleTimeString('sp-SP');
     const localDate = newDate.toLocaleDateString('sp-SP');
     return `${localTime} ${localDate}`;
+  }
+
+  switchState() {
+    this.state === 'closed' ? (this.state = 'open') : (this.state = 'closed');
+    console.log(this.state);
   }
 }

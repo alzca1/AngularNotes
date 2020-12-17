@@ -14,6 +14,12 @@
   position: relative;
   height: 25px;
 }
+
+#note .note-buttons-container .activate-colors {
+  position: absolute;
+  top: 2.5px;
+  left: 4px;
+}
 #note h3,
 p {
   outline: none;
