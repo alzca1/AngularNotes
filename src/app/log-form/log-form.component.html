@@ -5,23 +5,31 @@
       <mat-form-field class="form-group">
         <input
           matInput
-          type="text"
+          type="email"
           placeholder="Type your e-mail"
           formControlName="email"
+          (click)="resetErrors()"
         />
       </mat-form-field>
+      <mat-error class="error-message" *ngIf="wrongMail">{{
+        wrongMailMessage
+      }}</mat-error>
       <mat-form-field class="form-group">
         <input
           matInput
           type="password"
           placeholder="Type your password"
           formControlName="password"
+          (click)="resetErrors()"
         />
       </mat-form-field>
+      <mat-error class="error-message" *ngIf="wrongPassword">{{
+        wrongPasswordMessage
+      }}</mat-error>
     </form>
   </div>
   <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close] (click)="onSubmit()">Submit</button>
+    <button mat-button (click)="onSubmit()">Submit</button>
     <small (click)="onSwitchLogMode()">{{
       isLoginMode ? "Wanna sign up?" : "Wanna log in?"
     }}</small>

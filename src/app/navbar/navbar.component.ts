@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit {
   public openDialog() {
     const dialogRef = this.dialog.open(LogFormComponent, {
       width: '300px',
-      height: '300px',
+      height: '330px',
     });
   }
 
