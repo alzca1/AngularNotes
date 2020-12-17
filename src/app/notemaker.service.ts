@@ -14,7 +14,7 @@ export class NotemakerService implements OnInit {
   private notes: Note[] = [];
   private uid: string;
   private baseUrl = 'https://notesapp-b2c5d-default-rtdb.firebaseio.com/users/';
-
+  private wereOrdered = false;
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   ngOnInit() {}
@@ -44,7 +44,14 @@ export class NotemakerService implements OnInit {
             notes.push({ ...response[key], id: key });
           }
         }
-        this.notes = notes;
+
+        this.notes = notes.sort((a, b) => {
+          console.log(a.date, b.date);
+          let aDate = new Date(a.date);
+          let bDate = new Date(b.date);
+          return bDate.getTime() - aDate.getTime();
+        });
+
         return this.notes;
       })
     );
@@ -54,11 +61,13 @@ export class NotemakerService implements OnInit {
     const noteUrl = this.baseUrl + this.uid + '/notes/' + id + '.json';
     const newTitle = title.nativeElement.innerText;
     const newContent = content.nativeElement.innerText;
+    const newDate = new Date();
     // const updatedNotes = this.notes.slice();
     this.http
       .patch(noteUrl, {
         title: newTitle,
         content: newContent,
+        date: newDate,
       })
       .subscribe((data) => {
         console.log(data);
@@ -90,9 +99,11 @@ export class NotemakerService implements OnInit {
 
   updateColor(id, color) {
     const noteUrl = this.baseUrl + this.uid + '/notes/' + id + '.json';
+    const newDate = new Date();
     this.http
       .patch(noteUrl, {
         color: color,
+        date: newDate,
       })
       .subscribe((response) => {
         console.log(response);
