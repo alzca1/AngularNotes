@@ -9,6 +9,7 @@ import { LogFormComponent } from '../log-form/log-form.component';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { EventEmitterService } from '../event-emitter.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,7 +24,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private eventEmitter: EventEmitterService
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +35,14 @@ export class NavbarComponent implements OnInit {
         this.userName = user.email.split('@')[0];
       }
     });
+    this.eventEmitter.subsVar = this.eventEmitter.invokeNavbarLoginComponent.subscribe(
+      () => {
+        this.openDialog();
+      }
+    );
   }
 
-  openDialog() {
+  public openDialog() {
     const dialogRef = this.dialog.open(LogFormComponent, {
       width: '300px',
       height: '300px',
