@@ -102,3 +102,11 @@ p {
 #note .greyButtonContainer {
   background-color: #dadada;
 }
+
+#note .last-edited {
+  position: absolute;
+  left: 38px;
+  bottom: 0;
+  font-size: 0.5rem;
+  color: rgba(128, 128, 128, 0.461);
+}

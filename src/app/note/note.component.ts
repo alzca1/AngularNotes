@@ -98,14 +98,6 @@ export class NoteComponent implements OnInit {
         this.content.nativeElement.innerText = '';
       }
     });
-
-    // const moveObservable = fromEvent(
-    //   this.noteContainer.nativeElement,
-    //   'change'
-    // );
-    // moveObservable.subscribe((event) => {
-    //   console.log(event);
-    // });
   }
 
   updateNote(id, title, content) {
@@ -165,5 +157,12 @@ export class NoteComponent implements OnInit {
     console.log(color);
     console.log(this.noteColor, this.buttonContainerColor);
     this.notemaker.updateColor(this.note.id, color);
+  }
+
+  getLocalTime() {
+    const newDate = new Date(this.note.date);
+    const localTime = newDate.toLocaleTimeString('sp-SP');
+    const localDate = newDate.toLocaleDateString('sp-SP');
+    return `${localTime} ${localDate}`;
   }
 }
