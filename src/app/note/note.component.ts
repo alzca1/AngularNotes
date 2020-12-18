@@ -32,6 +32,7 @@ import { NotemakerService } from '../notemaker.service';
           opacity: 1,
           backgroundColor: 'transparent',
           transform: 'translate(20px,0)',
+          visibility: 'visible',
         })
       ),
       state(
@@ -40,11 +41,12 @@ import { NotemakerService } from '../notemaker.service';
           width: '0px',
           opacity: 0,
           left: '-100px',
-          transform: 'translate(-20px,-100px)',
+          transform: 'translate(120px, 0)',
+          visibility: 'hidden',
         })
       ),
-      transition('closed => open', animate(300)),
-      transition('open => closed', animate(300)),
+      transition('closed <=> open', animate('300ms ease-out')),
+      transition('open => closed', animate('300ms ease-in')),
     ]),
   ],
 })
