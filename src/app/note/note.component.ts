@@ -7,6 +7,14 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { NotemakerService } from '../notemaker.service';
@@ -15,6 +23,32 @@ import { NotemakerService } from '../notemaker.service';
   selector: 'app-note',
   templateUrl: './note.component.html',
   styleUrls: ['./note.component.scss'],
+  animations: [
+    trigger('divState', [
+      state(
+        'open',
+        style({
+          width: '50px',
+          opacity: 1,
+          backgroundColor: 'transparent',
+          transform: 'translate(20px,0)',
+          visibility: 'visible',
+        })
+      ),
+      state(
+        'closed',
+        style({
+          width: '0px',
+          opacity: 0,
+          left: '-100px',
+          transform: 'translate(120px, 0)',
+          visibility: 'hidden',
+        })
+      ),
+      transition('closed <=> open', animate('300ms ease-out')),
+      transition('open => closed', animate('300ms ease-in')),
+    ]),
+  ],
 })
 export class NoteComponent implements OnInit {
   @Input() note;
@@ -23,6 +57,7 @@ export class NoteComponent implements OnInit {
   @ViewChild('note', { static: true }) noteContainer: ElementRef;
   buttonContainerColor: string;
   noteColor: string;
+  state: string = 'closed';
 
   noteColors = [
     {
@@ -98,14 +133,6 @@ export class NoteComponent implements OnInit {
         this.content.nativeElement.innerText = '';
       }
     });
-
-    // const moveObservable = fromEvent(
-    //   this.noteContainer.nativeElement,
-    //   'change'
-    // );
-    // moveObservable.subscribe((event) => {
-    //   console.log(event);
-    // });
   }
 
   updateNote(id, title, content) {
@@ -165,5 +192,17 @@ export class NoteComponent implements OnInit {
     console.log(color);
     console.log(this.noteColor, this.buttonContainerColor);
     this.notemaker.updateColor(this.note.id, color);
+  }
+
+  getLocalTime() {
+    const newDate = new Date(this.note.date);
+    const localTime = newDate.toLocaleTimeString('sp-SP');
+    const localDate = newDate.toLocaleDateString('sp-SP');
+    return `${localTime} ${localDate}`;
+  }
+
+  switchState() {
+    this.state === 'closed' ? (this.state = 'open') : (this.state = 'closed');
+    console.log(this.state);
   }
 }

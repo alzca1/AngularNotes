@@ -14,6 +14,12 @@
   position: relative;
   height: 25px;
 }
+
+#note .note-buttons-container .activate-colors {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+}
 #note h3,
 p {
   outline: none;
@@ -24,11 +30,21 @@ p {
   font-size: 0.9rem;
 }
 
-#note .mat-mini-fab {
+#note .delete-button {
   position: absolute;
   bottom: -8px;
   right: -8px;
   transform: scale(0.45);
+}
+
+#note .colors-button {
+  position: absolute;
+  bottom: -8px;
+  left: -8px;
+  transform: scale(0.45);
+}
+
+#note .delete-note {
 }
 
 #note .note-text-container {
@@ -101,4 +117,12 @@ p {
 
 #note .greyButtonContainer {
   background-color: #dadada;
+}
+
+#note .last-edited {
+  position: absolute;
+  left: 38px;
+  bottom: 0;
+  font-size: 0.5rem;
+  color: rgba(128, 128, 128, 0.461);
 }
