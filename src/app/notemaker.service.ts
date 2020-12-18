@@ -45,13 +45,17 @@ export class NotemakerService implements OnInit {
           }
         }
 
-        this.notes = notes.sort((a, b) => {
-          console.log(a.date, b.date);
-          let aDate = new Date(a.date);
-          let bDate = new Date(b.date);
-          return bDate.getTime() - aDate.getTime();
-        });
-
+        this.notes = notes
+          .sort((a, b) => {
+            let aDate = new Date(a.creationDate);
+            let bDate = new Date(b.creationDate);
+            return bDate.getTime() - aDate.getTime();
+          })
+          .sort((a, b) => {
+            let aDate = new Date(a.date);
+            let bDate = new Date(b.date);
+            return bDate.getTime() - aDate.getTime();
+          });
         return this.notes;
       })
     );
