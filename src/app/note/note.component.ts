@@ -98,7 +98,7 @@ export class NoteComponent implements OnInit {
   ngOnInit(): void {
     this.setNoteColors(this.note.color);
     const titleObservable = fromEvent(this.title.nativeElement, 'keyup').pipe(
-      debounceTime(1000)
+      debounceTime(4000)
     );
     titleObservable.subscribe((event: KeyboardEvent) => {
       const value = (<HTMLElement>event.target).innerText;
@@ -108,7 +108,7 @@ export class NoteComponent implements OnInit {
     const contentObservable = fromEvent(
       this.content.nativeElement,
       'keyup'
-    ).pipe(debounceTime(1000));
+    ).pipe(debounceTime(4000));
     contentObservable.subscribe((event: KeyboardEvent) => {
       const value = (<HTMLElement>event.target).innerText;
       this.updateNote(this.note.id, this.title, this.content);
