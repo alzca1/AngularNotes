@@ -1,7 +1,14 @@
 <article id="note" cdkDrag [ngClass]="noteColor">
   <div [ngClass]="['note-buttons-container', buttonContainerColor]">
     <button mat-mini-fab class="colors-button" (click)="switchState()">
-      <span class="material-icons">palette</span>
+      <span
+        class="material-icons"
+        [ngClass]="{
+          open: state === 'open',
+          '': state === 'closed'
+        }"
+        >{{ state === "open" ? "check_circle_outline" : "palette" }}</span
+      >
     </button>
     <div class="note-colors-container" [@divState]="state">
       <span
