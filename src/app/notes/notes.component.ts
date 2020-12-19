@@ -42,7 +42,8 @@ export class NotesComponent implements OnInit {
       return (this.notes = this.dataCopy);
     }
     this.notes = this.notes.filter((element) => {
-      return element.title.includes(event) || element.content.includes(event);
+      const regExp = new RegExp(event, 'i');
+      return element.title.match(regExp) || element.content.match(regExp);
     });
   }
 }
