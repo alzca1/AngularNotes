@@ -5,7 +5,7 @@
   min-height: 200px;
   word-wrap: break-word;
   margin: 15px;
-  box-shadow: 0px 5px 15px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px -2px 6px -2px rgba(0, 0, 0, 0.2);
   position: relative;
 }
 
@@ -47,9 +47,6 @@ p {
 #note .material-icons .open {
   color: black;
   background-color: black;
-}
-
-#note .delete-note {
 }
 
 #note .note-text-container {

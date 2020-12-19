@@ -13,6 +13,7 @@ export class NotesComponent implements OnInit {
   notes: Note[];
   isLoading: boolean = false;
   uid: string;
+  dataCopy: Note[];
   constructor(
     private route: ActivatedRoute,
     private notemaker: NotemakerService,
@@ -21,14 +22,13 @@ export class NotesComponent implements OnInit {
 
   ngOnInit(): void {
     this.notes = this.route.snapshot.data.notes;
+    this.dataCopy = this.route.snapshot.data.notes;
     this.auth.user.subscribe((user) => {
       this.uid = user.id;
-      console.log(this.uid);
     });
     this.notemaker.$notesChanged.subscribe((data) => {
-      console.log('updating');
-      console.log(data);
       this.notes = data;
+      this.dataCopy = data;
     });
   }
 
@@ -36,9 +36,13 @@ export class NotesComponent implements OnInit {
     this.notemaker.addNote();
   }
 
-  // onFetchPosts() {
-  //   this.notemaker.fetchPosts().subscribe((notes) => {
-  //     this.notes = notes;
-  //   });
-  // }
+  logSearchString(event) {
+    this.notes = this.dataCopy;
+    if (!event) {
+      return (this.notes = this.dataCopy);
+    }
+    this.notes = this.notes.filter((element) => {
+      return element.title.includes(event) || element.content.includes(event);
+    });
+  }
 }

@@ -4,7 +4,9 @@
       <span class="material-icons"> note_add </span>
     </button>
   </div>
-
+  <app-search-bar
+    (searchValueEmitted)="logSearchString($event)"
+  ></app-search-bar>
   <div class="notes-container">
     <app-note *ngFor="let note of notes" [note]="note"></app-note>
   </div>
