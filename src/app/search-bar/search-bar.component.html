@@ -14,14 +14,14 @@
         matSuffix
         mat-icon-button
         aria-label="Clear"
-        (click)="value = ''"
+        (click)="searchNotes('')"
       >
         <mat-icon>X</mat-icon>
       </button>
     </mat-form-field>
   </div>
   <div class="search-icon">
-    <button mat-icon-button color="basic">
+    <button mat-icon-button color="basic" (click)="toggleSearch()">
       <mat-icon>search</mat-icon>
     </button>
   </div>

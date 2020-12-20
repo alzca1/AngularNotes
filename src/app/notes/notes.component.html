@@ -6,6 +6,8 @@
   </div>
   <app-search-bar
     (searchValueEmitted)="logSearchString($event)"
+    (toggleSearchBar)="onToggleSearchBar()"
+    [@searchState]="state"
   ></app-search-bar>
   <div class="notes-container">
     <app-note *ngFor="let note of notes" [note]="note"></app-note>
