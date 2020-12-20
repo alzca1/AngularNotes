@@ -2,12 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
   MatDialogModule,
   MatDialogRef,
   MAT_DIALOG_DEFAULT_OPTIONS,
 } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { NoteComponent } from './note/note.component';
@@ -28,6 +29,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './home/home.component';
 import { AuthInterceptorService } from './auth-interceptor.service';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,7 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo: '/home',
   },
+
   {
     path: 'home',
     component: HomeComponent,
@@ -54,6 +57,7 @@ const routes: Routes = [
     NavbarComponent,
     LogFormComponent,
     HomeComponent,
+    SearchBarComponent,
   ],
   entryComponents: [LogFormComponent],
   imports: [
@@ -67,10 +71,12 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatMenuModule,
     MatDialogModule,
+    MatIconModule,
   ],
   providers: [
     Resolver,

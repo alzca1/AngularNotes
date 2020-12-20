@@ -3,12 +3,14 @@ export class Note {
   content: string;
   date: Date;
   id: number;
+  creationDate: Date;
 
   constructor(title: string, content: string) {
     this.title = title;
     this.content = content;
     this.date = new Date();
     this.id = this.getId();
+    this.creationDate = new Date();
   }
 
   getId() {

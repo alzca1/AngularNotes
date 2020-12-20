@@ -1,0 +1,28 @@
+<div class="searchbar">
+  <div class="search-field">
+    <mat-form-field>
+      <mat-label>Search notes</mat-label>
+      <input
+        matInput
+        type="text"
+        (keyup)="searchNotes(value)"
+        [(ngModel)]="value"
+      />
+      <button
+        mat-button
+        *ngIf="value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="searchNotes('')"
+      >
+        <mat-icon>X</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="search-icon">
+    <button mat-icon-button color="basic" (click)="toggleSearch()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</div>
