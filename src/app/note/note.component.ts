@@ -42,7 +42,7 @@ import { NotemakerService } from '../notemaker.service';
           width: '0px',
           opacity: 0,
           left: '-100px',
-          transform: 'translate(120px, 0)',
+          transform: 'translate(60px, 0)',
           visibility: 'hidden',
         })
       ),
