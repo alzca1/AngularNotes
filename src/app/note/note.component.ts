@@ -56,8 +56,7 @@ export class NoteComponent implements OnInit, OnDestroy {
   @ViewChild('title', { static: true }) title: ElementRef;
   @ViewChild('content', { static: true }) content: ElementRef;
   @ViewChild('note', { static: true }) noteContainer: ElementRef;
-  @Input('cdkDragFreeDragPosition')
-  dragPosition: { x: number; y: number };
+
   titleObservable: any;
   contentObservable: any;
   titleClickObservable: any;
@@ -114,7 +113,6 @@ export class NoteComponent implements OnInit, OnDestroy {
       const value = (<HTMLElement>event.target).innerText;
       this.updateNote(this.note.id, this.title, this.content);
     });
-    this.dragPosition = this.note.lastDragPosition;
 
     // this.titleBlurObservable = fromEvent(this.title.nativeElement, 'blur');
     // this.titleBlurObservable
@@ -240,11 +238,11 @@ export class NoteComponent implements OnInit, OnDestroy {
     this.isDisabled = !this.isDisabled;
   }
 
-  dragEnded(id, event) {
-    this.dragPosition = event.distance;
-    console.log(this.dragPosition);
-    this.notemaker.updatePosition(id, this.dragPosition);
-  }
+  // dragEnded(id, event) {
+  //   this.dragPosition = event.distance;
+  //   console.log(this.dragPosition);
+  //   this.notemaker.updatePosition(id, this.dragPosition);
+  // }
 
   ngOnDestroy() {
     // this.titleObservable.unsubscribe();

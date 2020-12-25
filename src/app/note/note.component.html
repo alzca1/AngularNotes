@@ -1,11 +1,4 @@
-<article
-  id="note"
-  cdkDrag
-  [cdkDragDisabled]="isDisabled"
-  (cdkDragEnded)="dragEnded(note.id, $event)"
-  [ngClass]="noteColor"
-  [cdkDragFreeDragPosition]="dragPosition"
->
+<article id="note" cdkDrag [cdkDragDisabled]="isDisabled" [ngClass]="noteColor">
   <div [ngClass]="['note-buttons-container', buttonContainerColor]">
     <button mat-mini-fab class="colors-button" (click)="switchState()">
       <span
