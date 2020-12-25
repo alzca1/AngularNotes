@@ -9,6 +9,7 @@ import {
   MAT_DIALOG_DEFAULT_OPTIONS,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppComponent } from './app.component';
 import { NoteComponent } from './note/note.component';
@@ -77,6 +78,7 @@ const routes: Routes = [
     MatMenuModule,
     MatDialogModule,
     MatIconModule,
+    MatSlideToggleModule,
   ],
   providers: [
     Resolver,

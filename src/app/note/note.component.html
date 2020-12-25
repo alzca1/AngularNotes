@@ -1,4 +1,11 @@
-<article id="note" cdkDrag [ngClass]="noteColor">
+<article
+  id="note"
+  cdkDrag
+  [cdkDragDisabled]="isDisabled"
+  (cdkDragEnded)="dragEnded(note.id, $event)"
+  [ngClass]="noteColor"
+  [cdkDragFreeDragPosition]="dragPosition"
+>
   <div [ngClass]="['note-buttons-container', buttonContainerColor]">
     <button mat-mini-fab class="colors-button" (click)="switchState()">
       <span
@@ -37,4 +44,7 @@
     </p>
   </div>
   <span class="last-edited">last edited: {{ getLocalTime() }}</span>
+  <span class="lock-drag" (click)="toggleDraggable()"
+    ><mat-icon>{{ isDisabled ? "lock" : "lock_open" }}</mat-icon></span
+  >
 </article>

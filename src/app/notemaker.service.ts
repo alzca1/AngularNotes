@@ -113,4 +113,15 @@ export class NotemakerService implements OnInit {
         console.log(response);
       });
   }
+
+  updatePosition(id, coordinates) {
+    const noteUrl = this.baseUrl + this.uid + '/notes/' + id + '.json';
+    this.http
+      .patch(noteUrl, {
+        lastDragPosition: coordinates,
+      })
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
 }

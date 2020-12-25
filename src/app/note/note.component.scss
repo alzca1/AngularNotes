@@ -128,3 +128,19 @@ p {
   font-size: 0.5rem;
   color: rgba(128, 128, 128, 0.461);
 }
+
+#note .lock-drag {
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+  transform: scale(0.6, 0.6);
+  color: rgba(128, 128, 128, 0.461);
+  cursor: pointer;
+}
+
+@media only screen and (max-device-width: 480px) {
+  #note {
+    width: 70vw;
+    min-height: 40vh;
+  }
+}
