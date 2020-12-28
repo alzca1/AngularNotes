@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Note } from '../note.class';
@@ -10,6 +10,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { MatButtonToggleAppearance } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-notes',
@@ -39,6 +40,8 @@ export class NotesComponent implements OnInit {
   uid: string;
   dataCopy: Note[];
   state = 'hidden';
+  selectedVal: string;
+  @Input() appearance: MatButtonToggleAppearance;
   constructor(
     private route: ActivatedRoute,
     private notemaker: NotemakerService,
@@ -55,6 +58,7 @@ export class NotesComponent implements OnInit {
       this.notes = data;
       this.dataCopy = data;
     });
+    this.selectedVal = 'first-created';
   }
 
   addNote() {
@@ -76,5 +80,15 @@ export class NotesComponent implements OnInit {
     this.state === 'hidden'
       ? (this.state = 'visible')
       : (this.state = 'hidden');
+  }
+
+  notesOrderMode(mode) {
+    console.log('notesOrderMode');
+    this.notemaker.orderMode = mode;
+    this.notemaker.updateFetchPosts();
+  }
+
+  onValChange(selectedVal) {
+    this.selectedVal = selectedVal;
   }
 }

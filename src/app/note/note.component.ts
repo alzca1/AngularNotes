@@ -176,40 +176,32 @@ export class NoteComponent implements OnInit, OnDestroy {
   }
 
   setNoteColors(color) {
-    console.log(color);
     switch (color) {
       case 'yellow':
-        console.log('yellow picked');
         this.buttonContainerColor = 'yellowButtonContainer';
         this.noteColor = 'yellowContainer';
         break;
       case 'blue':
-        console.log('blue picked');
         this.buttonContainerColor = 'blueButtonContainer';
         this.noteColor = 'blueContainer';
         break;
       case 'green':
-        console.log('green picked');
         this.buttonContainerColor = 'greenButtonContainer';
         this.noteColor = 'greenContainer';
         break;
       case 'pink':
-        console.log('pink picked');
         this.buttonContainerColor = 'pinkButtonContainer';
         this.noteColor = 'pinkContainer';
         break;
       case 'violet':
-        console.log('violet picked');
         this.buttonContainerColor = 'violetButtonContainer';
         this.noteColor = 'violetContainer';
         break;
       case 'grey':
-        console.log('grey picked');
         this.buttonContainerColor = 'greyButtonContainer';
         this.noteColor = 'greyContainer';
         break;
       default:
-        console.log('default picked');
         this.buttonContainerColor = 'yellowButtonContainer';
         this.noteColor = 'yellowContainer';
     }

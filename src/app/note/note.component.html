@@ -25,14 +25,23 @@
       (click)="removeNote(note.id)"
     >
       <span class="material-icons"> delete </span>
-      <!-- <mat-icon><i class="material-icons">delete</i></mat-icon> -->
     </button>
   </div>
   <div class="note-text-container">
-    <h3 contenteditable="true" (mousedown)="$event.stopPropagation()" #title>
+    <h3
+      contenteditable="true"
+      (mousedown)="$event.stopPropagation()"
+      readonly="readonly"
+      #title
+    >
       {{ note.title }}
     </h3>
-    <p contenteditable="true" (mousedown)="$event.stopPropagation()" #content>
+    <p
+      contenteditable="true"
+      (mousedown)="$event.stopPropagation()"
+      readonly="readonly"
+      #content
+    >
       {{ note.content }}
     </p>
   </div>

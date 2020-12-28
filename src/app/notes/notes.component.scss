@@ -10,6 +10,16 @@
   padding-top: 10px;
 }
 
+#notes .order-buttons-group {
+  text-align: left;
+  padding: 15px 100px 30px 100px;
+}
+#notes .order-buttons-group span {
+  display: block;
+  line-height: 30px;
+  padding-left: 15px;
+}
+
 #notes .notes-container {
   display: flex;
   flex-wrap: wrap;

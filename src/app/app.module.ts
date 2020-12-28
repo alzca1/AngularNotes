@@ -10,6 +10,10 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+  MatButtonToggle,
+  MatButtonToggleModule,
+} from '@angular/material/button-toggle';
 
 import { AppComponent } from './app.component';
 import { NoteComponent } from './note/note.component';
@@ -79,6 +83,7 @@ const routes: Routes = [
     MatDialogModule,
     MatIconModule,
     MatSlideToggleModule,
+    MatButtonToggleModule,
   ],
   providers: [
     Resolver,
