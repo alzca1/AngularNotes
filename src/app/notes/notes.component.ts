@@ -11,6 +11,8 @@ import {
   animate,
 } from '@angular/animations';
 import { MatButtonToggleAppearance } from '@angular/material/button-toggle';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-notes',
@@ -45,7 +47,8 @@ export class NotesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private notemaker: NotemakerService,
-    private auth: AuthService
+    private auth: AuthService,
+    private searchService: SearchService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +62,10 @@ export class NotesComponent implements OnInit {
       this.dataCopy = data;
     });
     this.selectedVal = 'first-created';
+    this.searchService.searchValue.subscribe((value) => {
+      console.log('searching');
+      this.logSearchString(value);
+    });
   }
 
   addNote() {

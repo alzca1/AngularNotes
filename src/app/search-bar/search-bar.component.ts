@@ -7,6 +7,9 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { Subject } from 'rxjs';
+import { NotemakerService } from '../notemaker.service';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -44,7 +47,10 @@ export class SearchBarComponent implements OnInit {
   state = 'normal';
   value: string;
 
-  constructor() {}
+  constructor(
+    private notemaker: NotemakerService,
+    private searchService: SearchService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -52,7 +58,7 @@ export class SearchBarComponent implements OnInit {
     if (value === '') {
       this.value = '';
     }
-    this.searchValueEmitted.emit(value);
+    this.searchService.search(value);
   }
 
   clearField() {
