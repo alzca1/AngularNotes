@@ -60,10 +60,16 @@ export class NotesComponent implements OnInit {
     this.notemaker.$notesChanged.subscribe((data) => {
       this.notes = data;
       this.dataCopy = data;
+      // automatizar el fetch de notes con el valor de la búsqueda
+      // que tenemos en el buscador de notas.
+
+      this.logSearchString(this.searchService.value);
+      // if (this.searchService.value !== '') {
+      //   this.logSearchString(this.searchService.value);
+      // }
     });
     this.selectedVal = 'first-created';
     this.searchService.searchValue.subscribe((value) => {
-      console.log('searching');
       this.logSearchString(value);
     });
   }

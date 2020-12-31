@@ -74,12 +74,6 @@ export class NotemakerService implements OnInit {
             break;
         }
 
-        // this.notes = notes
-        //   .sort((a, b) => {
-        //     let aDate = new Date(a.creationDate);
-        //     let bDate = new Date(b.creationDate);
-        //     return bDate.getTime() - aDate.getTime();
-        //   })
         console.log(this.notes);
         this.$notesChanged.next(this.notes);
         return this.notes;

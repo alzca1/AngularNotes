@@ -5,10 +5,13 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class SearchService {
+  value = '';
   searchValue = new Subject<string>();
   constructor() {}
 
   search(value) {
+    this.value = value;
     this.searchValue.next(value);
+    console.log(this.value);
   }
 }
