@@ -11,7 +11,6 @@ import {
   animate,
 } from '@angular/animations';
 import { MatButtonToggleAppearance } from '@angular/material/button-toggle';
-import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { SearchService } from '../search.service';
 
 @Component({
