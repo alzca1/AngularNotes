@@ -5,14 +5,32 @@
   position: relative;
 }
 
+#notes .cockpit {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 10px;
+}
+
 #notes .button-container {
+  display: flex;
+  align-items: center;
   text-align: center;
   padding-top: 10px;
 }
 
+#notes .button-container button {
+  position: relative;
+}
+
+#notes .button-container button span {
+  position: absolute;
+  top: 4.3px;
+  left: 4.3px;
+  font-size: 3rem;
+}
 #notes .order-buttons-group {
-  text-align: left;
-  padding: 15px 100px 30px 100px;
+  align-self: right;
+  padding: 10px 0;
 }
 #notes .order-buttons-group span {
   display: block;
@@ -25,7 +43,6 @@
   flex-wrap: wrap;
   padding: 20px;
   width: 100%;
-
   padding: 0 0 0 80px;
 }
 
@@ -33,11 +50,20 @@
   animation: addButton 2s linear infinite alternate;
 }
 
+#notes .cockpit .note-colors-container {
+  position: relative;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
 @keyframes addButton {
   from {
     transform: scale(0.8);
   }
   to {
-    transform: scale(1);
+    transform: scale(0.9);
   }
 }
