@@ -1,6 +1,6 @@
 <div class="text-container">
   <h1>Welcome to NotesApp</h1>
-  <div *ngIf="redirection; else elseBlock">
+  <div *ngIf="checkRedirection(); else elseBlock">
     <h3>Please, <a [routerLink]="['/notes']">start adding your notes</a></h3>
   </div>
   <ng-template #elseBlock>

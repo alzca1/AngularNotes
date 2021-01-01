@@ -1,14 +1,47 @@
 <div id="notes">
-  <div class="button-container">
-    <button mat-fab color="warn" (click)="addNote()">
-      <span class="material-icons"> note_add </span>
-    </button>
+  <div class="cockpit">
+    <div class="button-container">
+      <button mat-fab color="accent" (click)="addNote()">
+        <span class="material-icons"> add_circle </span>
+      </button>
+    </div>
+    <div class="order-buttons-group">
+      <span>Order by: </span>
+      <mat-button-toggle-group
+        appearance="legacy"
+        #group="matButtonToggleGroup"
+        name="notes-order"
+        [value]="selectedVal"
+        (change)="onValChange(group.value)"
+      >
+        <mat-button-toggle
+          (click)="notesOrderMode('last_edited')"
+          class="button-toggle"
+          value="last-edited"
+          >Last Edited</mat-button-toggle
+        >
+        <mat-button-toggle
+          (click)="notesOrderMode('last_created')"
+          value="last-created"
+          >Last Created</mat-button-toggle
+        >
+        <mat-button-toggle
+          (click)="notesOrderMode('first_created')"
+          value="first-created"
+          >First Created</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
   </div>
-  <app-search-bar
+
+  <!-- quitamos la search bar hasta que veamos donde encajarla -->
+
+  <!-- <app-search-bar
     (searchValueEmitted)="logSearchString($event)"
     (toggleSearchBar)="onToggleSearchBar()"
     [@searchState]="state"
-  ></app-search-bar>
+  ></app-search-bar> -->
+
   <div class="notes-container">
     <app-note *ngFor="let note of notes" [note]="note"></app-note>
   </div>

@@ -4,6 +4,7 @@ export class Note {
   date: Date;
   id: number;
   creationDate: Date;
+  lastDragPosition: Object;
 
   constructor(title: string, content: string) {
     this.title = title;
@@ -11,6 +12,10 @@ export class Note {
     this.date = new Date();
     this.id = this.getId();
     this.creationDate = new Date();
+    this.lastDragPosition = {
+      x: 0,
+      y: 0,
+    };
   }
 
   getId() {

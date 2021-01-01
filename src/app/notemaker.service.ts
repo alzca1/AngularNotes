@@ -15,6 +15,7 @@ export class NotemakerService implements OnInit {
   private uid: string;
   private baseUrl = 'https://notesapp-b2c5d-default-rtdb.firebaseio.com/users/';
   private wereOrdered = false;
+  public orderMode: string = 'first_created';
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   ngOnInit() {}
@@ -38,24 +39,43 @@ export class NotemakerService implements OnInit {
     this.updateUserId();
     return this.http.get(this.baseUrl + this.uid + '/notes.json').pipe(
       map((response) => {
+        console.log(response);
         const notes = [];
         for (let key in response) {
           if (response.hasOwnProperty) {
             notes.push({ ...response[key], id: key });
+            console.log(notes);
           }
         }
+        switch (this.orderMode) {
+          case 'last_edited':
+            console.log('case last_edited');
+            this.notes = notes.sort((a, b) => {
+              let aDate = new Date(a.date);
+              let bDate = new Date(b.date);
+              return bDate.getTime() - aDate.getTime();
+            });
+            break;
+          case 'last_created':
+            console.log('case last_created');
+            this.notes = notes.sort((a, b) => {
+              let aDate = new Date(a.creationDate);
+              let bDate = new Date(b.creationDate);
+              return bDate.getTime() - aDate.getTime();
+            });
+            break;
+          case 'first_created':
+            console.log('case first_created');
+            this.notes = notes;
+            break;
+          default:
+            console.log('case default');
+            this.notes = notes;
+            break;
+        }
 
-        this.notes = notes
-          .sort((a, b) => {
-            let aDate = new Date(a.creationDate);
-            let bDate = new Date(b.creationDate);
-            return bDate.getTime() - aDate.getTime();
-          })
-          .sort((a, b) => {
-            let aDate = new Date(a.date);
-            let bDate = new Date(b.date);
-            return bDate.getTime() - aDate.getTime();
-          });
+        console.log(this.notes);
+        this.$notesChanged.next(this.notes);
         return this.notes;
       })
     );
@@ -112,5 +132,22 @@ export class NotemakerService implements OnInit {
       .subscribe((response) => {
         console.log(response);
       });
+  }
+
+  updatePosition(id, coordinates) {
+    const noteUrl = this.baseUrl + this.uid + '/notes/' + id + '.json';
+    this.http
+      .patch(noteUrl, {
+        lastDragPosition: coordinates,
+      })
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+
+  updateFetchPosts() {
+    this.fetchPosts().subscribe((response) => {
+      console.log('response');
+    });
   }
 }

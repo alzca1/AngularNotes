@@ -4,6 +4,7 @@ import {
   DoCheck,
   ElementRef,
   Input,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -15,8 +16,8 @@ import {
   transition,
   // ...
 } from '@angular/animations';
-import { fromEvent } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { fromEvent, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { NotemakerService } from '../notemaker.service';
 
 @Component({
@@ -41,7 +42,7 @@ import { NotemakerService } from '../notemaker.service';
           width: '0px',
           opacity: 0,
           left: '-100px',
-          transform: 'translate(120px, 0)',
+          transform: 'translate(60px, 0)',
           visibility: 'hidden',
         })
       ),
@@ -50,14 +51,22 @@ import { NotemakerService } from '../notemaker.service';
     ]),
   ],
 })
-export class NoteComponent implements OnInit {
+export class NoteComponent implements OnInit, OnDestroy {
   @Input() note;
   @ViewChild('title', { static: true }) title: ElementRef;
   @ViewChild('content', { static: true }) content: ElementRef;
   @ViewChild('note', { static: true }) noteContainer: ElementRef;
+
+  titleObservable: any;
+  contentObservable: any;
+  titleClickObservable: any;
+  contentClickObservable: any;
   buttonContainerColor: string;
+  titleBlurObservable: any;
+  contentBlurObservable: any;
   noteColor: string;
   state: string = 'closed';
+  isDisabled: boolean = true;
 
   noteColors = [
     {
@@ -97,36 +106,55 @@ export class NoteComponent implements OnInit {
 
   ngOnInit(): void {
     this.setNoteColors(this.note.color);
-    const titleObservable = fromEvent(this.title.nativeElement, 'keyup').pipe(
+    this.titleObservable = fromEvent(this.title.nativeElement, 'keyup').pipe(
       debounceTime(4000)
     );
-    titleObservable.subscribe((event: KeyboardEvent) => {
+    this.titleObservable.subscribe((event: KeyboardEvent) => {
       const value = (<HTMLElement>event.target).innerText;
       this.updateNote(this.note.id, this.title, this.content);
     });
 
-    const contentObservable = fromEvent(
+    // this.titleBlurObservable = fromEvent(this.title.nativeElement, 'blur');
+    // this.titleBlurObservable
+    //   .pipe(
+    //     distinctUntilChanged((prev, curr) => {
+    //       console.log(prev, curr);
+    //       return prev !== curr;
+    //     })
+    //   )
+    //   .subscribe((event: KeyboardEvent) => {
+    //     const value = (<HTMLElement>event.target).innerText;
+    //     this.updateNote(this.note.id, this.title, this.content);
+    //   });
+
+    this.contentObservable = fromEvent(
       this.content.nativeElement,
       'keyup'
     ).pipe(debounceTime(4000));
-    contentObservable.subscribe((event: KeyboardEvent) => {
+    this.contentObservable.subscribe((event: KeyboardEvent) => {
       const value = (<HTMLElement>event.target).innerText;
       this.updateNote(this.note.id, this.title, this.content);
     });
 
-    const titleClickObservable = fromEvent(this.title.nativeElement, 'click');
-    titleClickObservable.subscribe((event: MouseEvent) => {
+    // this.contentBlurObservable = fromEvent(this.content.nativeElement, 'blur');
+    // this.contentBlurObservable.subscribe((event: KeyboardEvent) => {
+    //   const value = (<HTMLElement>event.target).innerText;
+    //   this.updateNote(this.note.id, this.title, this.content);
+    // });
+
+    this.titleClickObservable = fromEvent(this.title.nativeElement, 'click');
+    this.titleClickObservable.subscribe((event: MouseEvent) => {
       const value = (<HTMLElement>event.target).innerText;
       console.log(value);
       if (value == 'Type a title') {
         this.title.nativeElement.innerText = '';
       }
     });
-    const contentClickObservable = fromEvent(
+    this.contentClickObservable = fromEvent(
       this.content.nativeElement,
       'click'
     );
-    contentClickObservable.subscribe((event: MouseEvent) => {
+    this.contentClickObservable.subscribe((event: MouseEvent) => {
       const value = (<HTMLElement>event.target).innerText;
       console.log(value);
       if (value == 'Type content') {
@@ -148,40 +176,32 @@ export class NoteComponent implements OnInit {
   }
 
   setNoteColors(color) {
-    console.log(color);
     switch (color) {
       case 'yellow':
-        console.log('yellow picked');
         this.buttonContainerColor = 'yellowButtonContainer';
         this.noteColor = 'yellowContainer';
         break;
       case 'blue':
-        console.log('blue picked');
         this.buttonContainerColor = 'blueButtonContainer';
         this.noteColor = 'blueContainer';
         break;
       case 'green':
-        console.log('green picked');
         this.buttonContainerColor = 'greenButtonContainer';
         this.noteColor = 'greenContainer';
         break;
       case 'pink':
-        console.log('pink picked');
         this.buttonContainerColor = 'pinkButtonContainer';
         this.noteColor = 'pinkContainer';
         break;
       case 'violet':
-        console.log('violet picked');
         this.buttonContainerColor = 'violetButtonContainer';
         this.noteColor = 'violetContainer';
         break;
       case 'grey':
-        console.log('grey picked');
         this.buttonContainerColor = 'greyButtonContainer';
         this.noteColor = 'greyContainer';
         break;
       default:
-        console.log('default picked');
         this.buttonContainerColor = 'yellowButtonContainer';
         this.noteColor = 'yellowContainer';
     }
@@ -204,5 +224,22 @@ export class NoteComponent implements OnInit {
   switchState() {
     this.state === 'closed' ? (this.state = 'open') : (this.state = 'closed');
     console.log(this.state);
+  }
+
+  toggleDraggable() {
+    this.isDisabled = !this.isDisabled;
+  }
+
+  // dragEnded(id, event) {
+  //   this.dragPosition = event.distance;
+  //   console.log(this.dragPosition);
+  //   this.notemaker.updatePosition(id, this.dragPosition);
+  // }
+
+  ngOnDestroy() {
+    // this.titleObservable.unsubscribe();
+    // this.contentObservable.unsubscribe();
+    // this.titleClickObservable.unsubscribe();
+    // this.contentClickObservable.unsubscribe();
   }
 }

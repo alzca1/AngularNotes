@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Note } from '../note.class';
@@ -10,6 +10,9 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { MatButtonToggleAppearance } from '@angular/material/button-toggle';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-notes',
@@ -39,10 +42,13 @@ export class NotesComponent implements OnInit {
   uid: string;
   dataCopy: Note[];
   state = 'hidden';
+  selectedVal: string;
+  @Input() appearance: MatButtonToggleAppearance;
   constructor(
     private route: ActivatedRoute,
     private notemaker: NotemakerService,
-    private auth: AuthService
+    private auth: AuthService,
+    private searchService: SearchService
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +60,17 @@ export class NotesComponent implements OnInit {
     this.notemaker.$notesChanged.subscribe((data) => {
       this.notes = data;
       this.dataCopy = data;
+      // automatizar el fetch de notes con el valor de la búsqueda
+      // que tenemos en el buscador de notas.
+
+      this.logSearchString(this.searchService.value);
+      // if (this.searchService.value !== '') {
+      //   this.logSearchString(this.searchService.value);
+      // }
+    });
+    this.selectedVal = 'first-created';
+    this.searchService.searchValue.subscribe((value) => {
+      this.logSearchString(value);
     });
   }
 
@@ -76,5 +93,15 @@ export class NotesComponent implements OnInit {
     this.state === 'hidden'
       ? (this.state = 'visible')
       : (this.state = 'hidden');
+  }
+
+  notesOrderMode(mode) {
+    console.log('notesOrderMode');
+    this.notemaker.orderMode = mode;
+    this.notemaker.updateFetchPosts();
+  }
+
+  onValChange(selectedVal) {
+    this.selectedVal = selectedVal;
   }
 }

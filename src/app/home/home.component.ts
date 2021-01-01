@@ -21,6 +21,6 @@ export class HomeComponent implements OnInit {
   }
 
   checkRedirection() {
-    this.redirection = !!localStorage.getItem('userData');
+    return !!localStorage.getItem('userData');
   }
 }

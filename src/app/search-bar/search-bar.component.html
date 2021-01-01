@@ -1,3 +1,14 @@
+<div class="searchBar">
+  <input
+    type="text"
+    (keyup)="searchNotes(value)"
+    [(ngModel)]="value"
+    (click)="toggleAnimation()"
+    (blur)="toggleAnimation()"
+  />
+  <label [@placeholder]="state">Search notes</label>
+</div>
+<!-- 
 <div class="searchbar">
   <div class="search-field">
     <mat-form-field>
@@ -25,4 +36,4 @@
       <mat-icon>search</mat-icon>
     </button>
   </div>
-</div>
+</div> -->
