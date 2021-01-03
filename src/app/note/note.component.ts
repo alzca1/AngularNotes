@@ -14,8 +14,10 @@ import {
   style,
   animate,
   transition,
+  useAnimation,
   // ...
 } from '@angular/animations';
+import { bounceOutRight } from 'ng-animate';
 import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { NotemakerService } from '../notemaker.service';
@@ -49,6 +51,9 @@ import { NotemakerService } from '../notemaker.service';
       transition('closed <=> open', animate('300ms ease-out')),
       transition('open => closed', animate('300ms ease-in')),
     ]),
+    trigger('bounceOutRight', [
+      transition('false => true', useAnimation(bounceOutRight)),
+    ]),
   ],
 })
 export class NoteComponent implements OnInit, OnDestroy {
@@ -67,6 +72,7 @@ export class NoteComponent implements OnInit, OnDestroy {
   noteColor: string;
   state: string = 'closed';
   isDisabled: boolean = true;
+  bounceOutRight: any;
 
   noteColors = [
     {
@@ -105,6 +111,7 @@ export class NoteComponent implements OnInit, OnDestroy {
   constructor(private notemaker: NotemakerService) {}
 
   ngOnInit(): void {
+    this.bounceOutRight = false;
     this.setNoteColors(this.note.color);
     this.titleObservable = fromEvent(this.title.nativeElement, 'keyup').pipe(
       debounceTime(4000)
@@ -169,6 +176,7 @@ export class NoteComponent implements OnInit, OnDestroy {
 
   removeNote(id) {
     this.notemaker.removeNote(id);
+    this.bounceOutRight = true;
   }
 
   dragEnd(event: CdkDragEnd) {

@@ -9,7 +9,9 @@ import {
   style,
   transition,
   animate,
+  useAnimation,
 } from '@angular/animations';
+import { rollIn } from 'ng-animate';
 import { MatButtonToggleAppearance } from '@angular/material/button-toggle';
 import { SearchService } from '../search.service';
 
@@ -33,6 +35,7 @@ import { SearchService } from '../search.service';
       ),
       transition('hidden <=> visible', animate('300ms ease')),
     ]),
+    trigger('rollIn', [transition('void => *', useAnimation(rollIn))]),
   ],
 })
 export class NotesComponent implements OnInit {
@@ -42,6 +45,7 @@ export class NotesComponent implements OnInit {
   dataCopy: Note[];
   state = 'hidden';
   selectedVal: string;
+
   @Input() appearance: MatButtonToggleAppearance;
   constructor(
     private route: ActivatedRoute,
